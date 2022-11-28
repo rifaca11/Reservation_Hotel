@@ -9,15 +9,21 @@ public class RoomService {
     private RoomRepository roomRepository = new RoomRepository();
     public void getAllRoomsByType(int idType, ServletRequest req, ServletResponse resp) {
         List<Room> rooms = roomRepository.getRoomByType(idType);
+        Type type = roomRepository.getRoomType(idType);
         req.setAttribute("roomType", rooms);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("roomType.jsp");
+        req.setAttribute("type", type);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("src/User/roomsAva.jsp");
         try {
             dispatcher.forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
+    }
+    public int addRoom(int num, int type, String description, String status, Double price) {
+        return roomRepository.addRoom(num, type, description, status, price);
+    }
+    public Room getRoom(int num) {
+        return roomRepository.getRoom(num);
     }
    
 

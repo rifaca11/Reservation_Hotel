@@ -11,19 +11,36 @@ public class ImageRepository {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
-    //save multiple images
-    public void saveAllImagesUsingPart(List<Image> images) throws ClassNotFoundException {
+    //save  images
+    public void saveImage(Image images) throws ClassNotFoundException {
         try {
-           
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO image (name) VALUES(?)");
-             connection = DbConnecting.getConnection();
-            for (Image image : images) {
-                preparedStatement.setString(1, image.getName());
-                preparedStatement.executeUpdate();
+            connection = DbConnecting.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO image (name, idroom) VALUES(?, ?)");
+            preparedStatement.setString(1, images.getName());
+            preparedStatement.setInt(2, images.getIdR());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    //getting roome images
+    public List<Image> getImages(int idR) throws ClassNotFoundException {
+        List<Image> images = new ArrayList<>();
+        try {
+            connection = DbConnecting.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM image WHERE idroom = ?");
+            preparedStatement.setInt(1, idR);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                Image image = new Image(resultSet.getInt(1), resultSet.getString(2));
+                images.add(image);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return images;
     }
 
        

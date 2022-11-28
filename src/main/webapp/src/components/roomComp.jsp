@@ -27,7 +27,7 @@
             <div class="flex justify-between">
                 <div class="text-gray-200 text-xs ml-3 p-4">$80 / Day</div>
                 <div class="mr-3 p-1">
-                    <button type="submit" class="bg-[#4B476A] text-white text-xs font-semibold px-4 py-2 rounded-full">Book now</button>
+                    <a href="User/roomAva.jsp" class="bg-[#4B476A] text-white text-xs font-semibold px-4 py-2 rounded-full">Book now</a>
                 </div>
             </div>
         </div>

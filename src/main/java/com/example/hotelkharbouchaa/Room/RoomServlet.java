@@ -8,53 +8,50 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
+import com.example.hotelkharbouchaa.Image.Image;
+import com.example.hotelkharbouchaa.Image.ImageService;
+
 @WebServlet(name = "RoomServlet", value = "/room")
 public class RoomServlet extends HttpServlet {
 
     private RoomRepository roomRepository = new RoomRepository();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int num = Integer.parseInt(req.getParameter("num"));
-        int idType = Integer.parseInt(req.getParameter("idType"));
-        double tarif = Double.parseDouble(req.getParameter("tarif"));
-        String status = req.getParameter("status");
-        String description = req.getParameter("description");
-        Room newRoom = new Room(num, idType, tarif, status, description);
-        if(!roomRepository.isRoomExist(num))
+        RoomService roomService = new RoomService();
+        String action = req.getParameter("action");
+        switch(action)
         {
-            roomRepository.addRoom(newRoom);
-            req.setAttribute("message", "Room added successfully");
+            case "detail":
+            int id = Integer.parseInt(req.getParameter("id"));
+            roomService.getAllRoomsByType(id,req,resp);
+            break;
+             
         }
-        else
-        {
-           newRoom.setNum(num);
-           roomRepository.updateRoom(newRoom);
-              req.setAttribute("message", "Room updated successfully");
-        }
+       
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        if(action == null)
-        {
-            action = "LIST";
+        //details?id
+        //get id from url
+        RoomService roomService = new RoomService();
+        ImageService imageService = new ImageService();
+        int id = Integer.parseInt(req.getParameter("number"));
+        Room room = roomService.getRoom(id);
+        System.out.println("room : "+room.getIdR());
+        req.setAttribute("room",room);
+        try {
+            List<Image> images = imageService.getImages(id);
+            System.out.println("images : "+images.get(1).getName());
+            req.setAttribute("images", images);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        switch(action)
-        {
-            case "Rooms":
-                getAllRooms(req, resp);
-                break;
-            case "checkRoom":
-                checkRoom(req, resp);
-                break;
-            case "DeleteRoom":
-                deleteRoom(req, resp);
-                break;
-            default:
-                getAllRooms(req, resp);
-                break;
-        }
-    }
+        
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("src/User/roomDetail.jsp");
+        requestDispatcher.forward(req,resp);
+
+        System.out.println("id : "+id);
+    }   
     
 
     private void deleteRoom(HttpServletRequest req, HttpServletResponse resp) {

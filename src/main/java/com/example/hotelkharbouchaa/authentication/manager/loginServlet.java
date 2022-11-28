@@ -33,6 +33,7 @@ public class loginServlet extends HttpServlet {
                 System.out.println("there is manager");
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
+                session.setAttribute("idAdmin", manager.getIdM());
                 response.sendRedirect("/dashboard");
 
             } else {

@@ -3,7 +3,7 @@
     <nav class="">
         <ul class="flex gap-20 text-sm font-medium">
             <li><a href="${pageContext.request.contextPath}/" class="mb-2 border-b-2">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/room">Room &nbsp;&&nbsp; suites</a></li>
+            <li><a href="${pageContext.request.contextPath}/rooms">Room &nbsp;&&nbsp; suites</a></li>
             <li><a href="${pageContext.request.contextPath}/events">Events</a></li>
             <li><a href="${pageContext.request.contextPath}/extras">Extras</a></li>
         </ul>

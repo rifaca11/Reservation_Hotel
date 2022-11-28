@@ -1,6 +1,7 @@
 package com.example.hotelkharbouchaa.Room;
 
 public class Room {
+    private int idR;
     private int num;
     private int idType;
     private String status;
@@ -17,7 +18,20 @@ public class Room {
         this.status = status;
         this.description = description;
     }
-
+    public Room(int idR, int num, int idType, double tarif, String status, String description) {
+        this.idR = idR;
+        this.num = num;
+        this.idType = idType;
+        this.tarif = tarif;
+        this.status = status;
+        this.description = description;
+    }
+    public int getIdR() {
+        return idR;
+    }
+    public void setIdR(int idR) {
+        this.idR = idR;
+    }
     public int getNum() {
         return num;
     }
